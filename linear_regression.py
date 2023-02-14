@@ -6,25 +6,27 @@ class LinearRegression:
 
         Parameters
         ----------
-        X_train : matriz de observações das variáveis independentes
-        y_train : vetor de observações da variável dependente
+        X_train : matriz de observaÃ§Ãµes das variÃ¡veis independentes
+        y_train : vetor de observaÃ§Ãµes da variÃ¡vel dependente
             DESCRIPTION.
 
         Returns
         -------
-        theta : vetor com os parâmetros da regressão linear
+        theta : vetor com os parÃ¢metros da regressÃ£o linear
 
         '''
         # inserir coluna "ones"
         ones = np.ones(X_train.shape[0])
         X_train = np.insert(X_train, 0, ones, axis = 1)
         
-        # Calcula os estimadores de mínimos quadrados        
+        # Calcula os estimadores de mÃ­nimos quadrados        
         # theta = (X^T.X)^(-1).X^T.y
         inversa = np.linalg.inv(np.dot(X_train.T, X_train))
         theta = np.dot(np.dot(inversa, X_train.T), y_train)
         
-        return theta
+        self.theta = theta
+        self.coef = self.theta[1:]
+        self.intercept = self.theta[0]
     
     def predict(self, X_test):
         '''
@@ -35,14 +37,14 @@ class LinearRegression:
 
         Returns
         -------
-        y_pred : predições de y
+        y_pred : prediÃ§Ãµes de y
 
         '''
         # inserir coluna "ones"
         ones = np.ones(X_test.shape[0])
         X_test = np.insert(X_test, 0, ones, axis = 1)
         
-        # Faz as predições para os valores de X_test
+        # Faz as prediÃ§Ãµes para os valores de X_test
         y_pred = np.dot(X_test, self.theta)
         
         return y_pred
